@@ -16,11 +16,12 @@ table_data=[
   ['kiwi', 4, 0.49]]
 reports.generate("/tmp/report.pdf", "A Complete Inventory of My Fruit", "This is all my fruit.", table_data)
 
-sender = "automation@example.com"
-receiver = "{}@example.com".format(os.environ.get('USER'))
+sender = "toby2494.development@gmail.com"
+#receiver = "{}@example.com".format(os.environ.get('USER'))
+receiver = "toby2494@gmail.com"
 subject = "List of Fruits"
 body = "Hi\n\nI'm sending an attachment with all my fruit."
 
 message = emails.generate(sender, receiver, subject, body, "/tmp/report.pdf")
-emails.send(message)
+emails.send(sender, message, receiver)
 

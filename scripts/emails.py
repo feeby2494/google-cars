@@ -4,6 +4,7 @@ import email.message
 import mimetypes
 import os.path
 import smtplib
+import ssl
 
 def generate(sender, recipient, subject, body, attachment_path):
   """Creates an email with an attachement."""
@@ -27,8 +28,14 @@ def generate(sender, recipient, subject, body, attachment_path):
 
   return message
 
-def send(message):
+def send(sender, message, recipient):
+  # Create a secure SSL context
+  #context = ssl.create_default_context()
   """Sends the message to the configured SMTP server."""
-  mail_server = smtplib.SMTP('localhost')
-  mail_server.send_message(message)
+  #mail_server = smtplib.SMTP('smtp.gmail.com',587)
+  #mail_server.starttls(context=context)
+  mail_server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+
+  mail_server.login(sender, "mj1268Alizee")
+  mail_server.sendmail(str(sender), str(recipient), str(message))
   mail_server.quit()
