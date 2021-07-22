@@ -3,6 +3,8 @@
 import json
 import locale
 import sys
+import reports
+import emails
 
 
 def load_data(filename):
@@ -58,6 +60,12 @@ def process_data(data):
       format_car(max_revenue["car"]), max_revenue["revenue"], max_sales["sales"], max_sales["car"]["car_make"], max_sales["car"]["car_model"], max_sales["car"]["car_year"], most_popular_year_stat[0]),
   ]
 
+  # As per Google's requiremnts in qwiklabs:
+  summary = [
+    "The {} generated the most revenue: ${}. The {} had the most sales: {}. The most popular year was {} with {} sales.".format(
+      format_car(max_revenue["car"]), max_revenue["revenue"], format_car(max_sales["car"]), max_sales["sales"], most_popular_year_stat[0], most_popular_year_stat[1])
+  ]
+
   return summary
 
 
@@ -73,10 +81,17 @@ def main(argv):
   """Process the JSON data and generate a full report out of it."""
   data = load_data("../car_sales.json")
   summary = process_data(data)
-  print(summary)
   # TODO: turn this into a PDF report
+  table_data = cars_dict_to_table(data)
+  print(table_data)
 
+  reports.generate("cars.pdf", "Sales Summary for Last Month", summary[0], table_data)
   # TODO: send the PDF report as an email attachment
+  sender = "toby2494.development@gmail.com"
+  receiver = "toby2494@gmail.com"
+
+  message = emails.generate(sender, receiver, "Sales summary for last month", summary[0], "./cars.pdf")
+  emails.send(sender, message, receiver)
 
 
 if __name__ == "__main__":
