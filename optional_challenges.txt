@@ -1,0 +1,8 @@
+As optional challenges, you could try some of the following functionalities:
+
+    Sort the list of cars in the PDF by total sales.
+
+    Create a pie chart for the total sales of each car made.
+
+    Create a bar chart showing total sales for the top 10 best selling vehicles using the ReportLab Diagra library. Put the vehicle name on the X-axis and total revenue (remember, price * total sales!) along the Y-axis.
+
